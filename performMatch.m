@@ -7,7 +7,7 @@ ws2 = {};
 % Limits
 linhas = 1:NumSamples:TotaldeArquivos;
 
-% Perform matching of each 
+% Perform matching of each
 parfor i=1:TotaldeArquivos
     for j=1:TotaldeArquivos
         if i<=j;
@@ -39,10 +39,10 @@ w2 = w;
 w2_valid = w_valid;
 
 % ws2 is for debug
-ws2 = ws; 
+ws2 = ws;
 
-% Remove irrelevant elements for TP and FN calculations
-for i = 1:length(linhas)-1    
+% Preserve only elements that are relevant for TP and FN calculations
+for i = 1:length(linhas)-1
     w(linhas(i):linhas(i)+NumSamples-1, linhas(i+1):TotaldeArquivos) = 0;
     w_valid(linhas(i):linhas(i)+NumSamples-1, linhas(i+1):TotaldeArquivos) = 0;
 end
@@ -55,7 +55,7 @@ nTP = sum(sum(w_valid));
 % Number of False Negative tests
 nFN = nTP;
 
-% Remove irrelevant elements for TN and FP calculations
+% Preserve only elements that are relevant for TN and FP calculations
 for i = 1:length(linhas)
     
     w2(linhas(i):linhas(i)+NumSamples-1, linhas(i):linhas(i)+NumSamples-1) = 0;
@@ -70,59 +70,16 @@ for i = 1:length(linhas)
 end
 
 
-% Number of True Negative tests
-%nTN = sum(sum(w2_valid));
-
-% Number of False Positive tests
-%nFP = nTN;
-
-% Thresholds
-% T = 0:1:limThresh;
-% 
-% conta = 1;
-% 
-% for k = T
-%     
-%     % Apply threshold
-%     Z = (w2+w)>k;
-%     
-%     % Initialize variables
-%     TP(conta) = 0;
-%     FN(conta) = 0;
-%     FP(conta) = 0;
-%     TN(conta) = 0;
-%     
-%     % True Positive and False Negatives
-%     for i = 1:length(linhas)
-%         
-%         BlockTPFN = Z(linhas(i):linhas(i)+NumSamples-1, linhas(i):linhas(i)+NumSamples-1);
-%         
-%         TP(conta) = TP(conta)+sum(sum( BlockTPFN ));
-%         FN(conta) = FN(conta)+sum(sum(1-BlockTPFN))-((NumSamples^2 - NumSamples)/2 + NumSamples);
-%         
-%     end
-%     
-%     % False Positives and True Negatives
-%     for i = 1:length(linhas)-1
-%         
-%         BlockTNFP = Z(linhas(i):linhas(i)+NumSamples-1, linhas(i+1):TotaldeArquivos);
-%         
-%         FP(conta) = FP(conta) + sum(sum(BlockTNFP));
-%         TN(conta) = TN(conta) + sum(sum(1-BlockTNFP));
-%         
-%     end
-%     
-%     % Increment counter
-%     conta = conta +1;
-%     
-% end
-% 
-% TP = TP/nTP;
-% FN = FN/nFN;
-% TN = TN/nTN;
-% FP = FP/nFP;
-% 
-% eer = (FN(find(abs(FP-FN)<=min(abs(FP-FN)),1)) +...
-%     FP(find(abs(FP-FN)<=min(abs(FP-FN)),1)))/2
-
 return
+
+
+
+
+
+
+
+
+
+
+
+
